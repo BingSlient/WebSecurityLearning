@@ -10,7 +10,7 @@ linux+nginx+php- fpm+mysql
 
 Linux 系统使用 Ubuntu-18.04 版本，使用 VMware Workstation 安装其镜像，Ubuntu 镜像在其官网上下载。
 
-![1564387874274](\images\1564387874274.png)
+![1564387874274](..\images\1564387874274.png)
 
 安装完成后，进行系统和软件更新，在终端中输入：
 
@@ -28,7 +28,7 @@ sudo apt-get install nginx
 
 在浏览器中浏览 nginx 默认网页，http://主机地址，说明安装成功
 
-![1564392035766](\images\1564392035766.png)
+![1564392035766](..\images\1564392035766.png)
 
 ### 1.3 安装 Php-fpm 
 
@@ -44,7 +44,7 @@ sudo apt-get intall php-fpm
 systemctl status php7.2-fpm.service 
 ```
 
-![1564392367696](\images\1564392367696.png)
+![1564392367696](..\images\1564392367696.png)
 
 ### 1.4 安装 Mysql
 
@@ -60,7 +60,7 @@ sudo apt-get install mysql-server mysql-client php-mysql
 sudo systemctl mysql.service
 ```
 
-![1564659362935](\images\1564659362935.png)
+![1564659362935](..\images\1564659362935.png)
 
 ## 2. 配置自己的网站
 
@@ -174,17 +174,17 @@ sudo mkdir /var/www/jaylen.com
 
 通过浏览器浏览网站 www.jaylen.com
 
-![1564820064946](\images\1564820064946.png)
+![1564820064946](..\images\1564820064946.png)
 
 浏览 www.jaylen.com/index.php
 
-![1564820032466](\images\1564820032466.png)
+![1564820032466](..\images\1564820032466.png)
 
 测试完成，没有问题。
 
 进一步完善网页内容，使其显示一张图片，图片下方带有评论输入框，可以提交评论，提交的评论存到主机的 mysql 数据库中，而后显示在评论区，最后完成的大致如下图，简陋的不行。
 
-![1564840770425](\images\1564840770425.png)
+![1564840770425](..\images\1564840770425.png)
 
 在 mysql 中创建一个新用户，并授权 INSERT、SELECT 权限，评论内容需要存到数据库，并读取数据库内容。
 
@@ -320,7 +320,7 @@ mysql> INSERT INTO comments(comment) VALUES ('test');
 
 在网页中测试下提交评论，
 
-![1564841954745](\images\1564841954745.png)
+![1564841954745](..\images\1564841954745.png)
 
 ### 2.5 问题
 
@@ -379,7 +379,7 @@ mysql> INSERT INTO comments(comment) VALUES ('test');
 
 Nginx 默认开启 Server Token（显示版本号），这样使得 Nginx 的版本号很容易被获取，如下图为连接域名不存在资源时的返回页面，可以看到 Nginx 的版本号
 
-![1564802848522](\images\1564802848522.png)
+![1564802848522](..\images\1564802848522.png)
 
 在 `/etc/nginx/nginx.conf` 中 http 块中添加（去掉注释即可）：
 
@@ -389,7 +389,7 @@ server_tokens off
 
 关闭后，访问域名下不存在的资源，返回页面中没有了 Nginx 的版本号 信息。
 
-![1564815315221](\images\1564815315221.png)
+![1564815315221](..\images\1564815315221.png)
 
 ### 3.2 加固 mysql
 
