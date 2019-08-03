@@ -10,10 +10,7 @@ linux+nginx+php- fpm+mysql
 
 Linux 系统使用 Ubuntu-18.04 版本，使用 VMware Workstation 安装其镜像，Ubuntu 镜像在其官网上下载。
 
-<<<<<<< HEAD
 ![1564387874274](https://github.com/BingSlient/WebSecurityLearning/blob/master/WebSecurityBasics/images/1564387874274.png)
-=======
->>>>>>> ce351c1c2e772f62dc6bdd43c57b3ff168960c04
 
 安装完成后，进行系统和软件更新，在终端中输入：
 
