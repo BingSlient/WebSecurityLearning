@@ -432,4 +432,3 @@ sh ~/.vim_runtime/install_awesome_parameterized.sh /opt/vim_runtime --all
 [6] [Passing Uncontrolled Requests to PHP](https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/?highlight=pitfalls#passing-uncontrolled-requests-to-php )
 
 [7] [Unknown column &#39;&#39; in &#39;field list&#39;解决方案](https://blog.csdn.net/qq_15936309/article/details/51859761 )
-
