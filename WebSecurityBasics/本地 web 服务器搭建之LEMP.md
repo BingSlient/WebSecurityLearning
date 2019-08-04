@@ -1,4 +1,20 @@
-# 0x01 任务
+# 0x00  背景
+
+## 1. 目的
+
+基于 LEMP 栈 搭建本地 web 服务器，实现一个能在本地网络中访问的网页，网页中实现对数据库的简单操作。
+
+**学习目标：**
+
+- 理解 web 服务器的运行，学会手动搭建一个 web 服务器
+- 学习简单的 HTML 和 PHP 知识，并编写网站前端和服务器端的代码
+- 学习 MySQL 数据库的基本知识，完成数据库的基本操作，实现 PHP 和 MySQL 的连接
+
+## 2. LEMP 栈简介
+
+LEMP 指代 Linux、Nginx、MySQL、PHP，是一个实现 web 服务器的栈，之所以简写为 LEMP 而不是 LNMP，因为Nginx 的读音同 Engine X，因此简写选的是 E 而不是 N，此外 LEMP 是实际可拼读的英文，而 LNMP 只能逐个字母发音（当然也有 LNMP 的简写，但个人比较支持 LEMP）
+
+# 0x01 实现
 
 ## 1. 环境搭建过程
 
@@ -240,26 +256,29 @@ mysql> INSERT INTO comments(comment) VALUES ('test');
 最终的 `index.php` 文件内容如下：
 
 ```php+HTML
-<!DOCTYPE HTML>
+<!DOCTYPE HTML>  
  <html>
  <head>
  <style>
  .error {color: #FF0000;}
- image {
-     width: 100%;
+ img {
+     width: 30%;
      height: auto;
+ }
+ td {
+     border: 1px solid black;
  }
  </style>
  </head>
- <body>
+ <body>  
  
  <?php
  // define variables and set to empty values
  
  include('connect-mysql.php');
  
- $comment = "";
- $commentErr = "";
+ $comment = ""; 
+ $commentErr = ""; 
  
  if ($_SERVER["REQUEST_METHOD"] == "POST") {
    if (empty($_POST["comment"])) {
@@ -269,10 +288,10 @@ mysql> INSERT INTO comments(comment) VALUES ('test');
      $sql = "INSERT INTO comments (comment) VALUES ('".$comment."')";
      if (mysqli_query($dbcon, $sql)) {
          $commentErr = "Submit comment successfully!";
-     }
+     }   
      else {
          $commentErr = "Error:" . $sql . "<br>" . mysqli_error($dbcon);
-     }
+     }   
    }
  }
  
@@ -285,19 +304,20 @@ mysql> INSERT INTO comments(comment) VALUES ('test');
  ?>
  
  <h1>Jaylen's HomePage</h1>
- <img src='image/homepage.jpeg' alt='homepage icon' width='500px' height='400px'> 
+ <img src='image/homepage.jpeg' alt='homepage icon'> 
  <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
-   <br><br>
-   Comment: <textarea name="comment" rows="5" cols="40"><?php echo $comment;?></textarea>
+   <hr>
+   <p>Wirte your comment here!</p>
+   <textarea name="comment" rows="5" cols="80"><?php echo $comment;?></textarea>
    <span class='error'>*<?php echo $commentErr; ?></span>
-   <br><br>
+   <br></br>
    <input type="submit" name="submit" value="Submit">  
+   <hr>
  </form>
- 
  <?php
- 
  $sqlget = "SELECT * FROM comments";
  $sqldata = mysqli_query($dbcon, $sqlget) or die("Fail to connect to database!" .  mysqli_error($dbcon));
+ 
  echo "<table>";
  echo "<tr><th>Comments</th></tr>";
  
@@ -309,10 +329,8 @@ mysql> INSERT INTO comments(comment) VALUES ('test');
  
  echo "</table>";
  ?>
- 
  </body>
  </html>
-
 ```
 
 连接数据库的操作，单独放到 `connec-mysql.php` 文件中。
@@ -430,3 +448,6 @@ sh ~/.vim_runtime/install_awesome_parameterized.sh /opt/vim_runtime --all
 [6] [Passing Uncontrolled Requests to PHP](https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/?highlight=pitfalls#passing-uncontrolled-requests-to-php )
 
 [7] [Unknown column &#39;&#39; in &#39;field list&#39;解决方案](https://blog.csdn.net/qq_15936309/article/details/51859761 )
+
+[8] [What’s a LEMP stack?](https://lemp.io/)
+
