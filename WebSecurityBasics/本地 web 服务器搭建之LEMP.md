@@ -12,7 +12,7 @@
 
 ## 2. LEMP 栈简介
 
-LEMP 指代 Linux、Nginx、MySQL、PHP，是一个实现 web 服务器的栈，之所以简写为 LEMP 而不是 LNMP，因为Nginx 的读音同 Engine X，因此简写选的是 E 而不是 N，此外 LEMP 是实际可拼读的英文，而 LNMP 只能逐个字母发音（当然也有 LNMP 的简写，但个人比较支持 LEMP）
+LEMP 指代 Linux、Nginx、MySQL、PHP，是一个实现 web 服务器的栈，之所以简写为 LEMP 而不是 LNMP，因为Nginx 的读音同 Engine X，因此简写选的是 E 而不是 N，此外 LEMP 是实际可拼读的英文，而 LNMP 只能逐个字母发音（当然也有 LNMP 的简写，但个人比较支持 LEMP）。常见的搭建 web 服务器的组合还有 LAMP，它是 LEMP 的前辈， LAMP 中用的 web 服务器软件 为 Apache。
 
 # 0x01 实现
 
@@ -388,7 +388,58 @@ mysql> INSERT INTO comments(comment) VALUES ('test');
 
 ### 3.1 加固 Linux 系统
 
-待补充。
+**时刻保持系统和软件为最新版本**
+
+在 Ubuntu 中检查系统需要更新的软件包，使用如下命令，`apt-get -s`  命令用于模拟后面命令的操作，但实际不会改变系统的状态，所以 `apt-get -s upgrade` 只会模拟软件更新的过程，你会看到被更新的软件的信息，但实际并没有更新到系统上  ：
+
+```bash
+sudo apt-get update && sudo apt-get -s upgrade
+```
+
+然后根据需要更新你想要更新的软件。如果你想更新所有软件，使用如下命令：
+
+```bash
+sudo apt-get update && sudo apt-get upgrade
+```
+
+**加固远程登陆**
+
+在使用和管理服务器时，往往我们需要远程登陆服务器，这就需要我们保证远程登陆过程的安全性。以下步骤一定程度提高了远程登陆的安全性。
+
+1. 强制使用高强度用户密码（数字、字母、字符的组合且长度14位以上）
+2. 改变 SSH 默认的端口（22）为随机端口
+3. 禁止 root 身份的远程登陆
+4. 使用公钥验证机制进行远程登陆
+5. 使用 Linux 标准用户而不是 root 用户执行上述操作，并且该用户的权限可提升成 root 权限
+
+现以 Ubuntu 系统为例，完成上述操作：
+
+要强制用户使用高强度密码，需要安装额外的模块 `libpam-cracklib`
+
+```shell
+sudo apt-get install libpam-cracklib
+```
+
+在 Ubuntu 中，密码策略（规定密码的长度，字符等）定义在 `/etc/pam.d/common-password` 文件中，如果要规定，密码长度为 14，包含大小写字符数字和字符，在文件中，在 `pam_unix.so`的前一行，添加：
+
+```
+password required pam_cracklib.so try_first_pass retry=3 minlen=14 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1 difok=2 reject_username
+```
+
+上述配置的选项的描述如下：
+
+| 选项            | 描述                                                         |
+| --------------- | ------------------------------------------------------------ |
+| retry=N         | 设置密码时的，最大重试次数                                   |
+| minlen=N        | 新密码的最小长度                                             |
+| lcredit=N       | 最少小写字母数，小于0，正常计算 minlen，大于0，计算 minlen 额外加 1 |
+| ucredt=N        | 最少大写字母数，小于0，正常计算 minlen，大于0，计算 minlen 额外加 1 |
+| dcredit=N       | 最少数字的数，小于0，正常计算 minlen，大于0，计算 minlen 额外加 1 |
+| ocredit=N       | 最少其它字符数，小于0，正常计算 minlen，大于0，计算 minlen 额外加 1 |
+| difok=N         | 和旧密码不同的字符数                                         |
+| reject_username | 禁止用户名作为密码                                           |
+
+ 
 
 ### 3.2 加固 Nginx
 
@@ -450,4 +501,6 @@ sh ~/.vim_runtime/install_awesome_parameterized.sh /opt/vim_runtime --all
 [7] [Unknown column &#39;&#39; in &#39;field list&#39;解决方案](https://blog.csdn.net/qq_15936309/article/details/51859761 )
 
 [8] [What’s a LEMP stack?](https://lemp.io/)
+
+[9] [How to secure LEMP stack](https://www.rosehosting.com/blog/how-to-secure-your-lemp-stack/)
 
